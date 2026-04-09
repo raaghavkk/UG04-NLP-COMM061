@@ -7,9 +7,9 @@
 
 | Name | URN | Task |
 |------|-----|------|
-| Raaghav Kulshreshtha | 6776090 | Data Analysis & Visualisation |
-| Qifan Zheng | 6783820 | Cross-Variety Evaluation |
-| Akshyat Dali | 6805993 | Fine-tuning Pre-trained Models |
+| Raaghav Kulshreshtha | 6776090 | Data Analysis & Visualisation + Cross-Variety Evaluation |
+| Qifan Zheng | 6783820 | Evaluation & Metrics |
+| Akshyat Dali | 6805993 | Fine-tuning Pre-trained Models (LoRA) |
 | Naeem Ahmed | 6779560 | Classical Baseline Models |
 
 ---
@@ -28,9 +28,10 @@ UG04-NLP-COMM061/
 ├── notebooks/
 │   ├── main.ipynb                    # Entry point — runs all experiments
 │   ├── raaghav_data_analysis.ipynb   # Q1: Data analysis & visualisation
+│   ├── raaghav_crossvariety.ipynb    # Q2.2: Cross-variety evaluation matrix
 │   ├── naeem_baselines.ipynb         # Q2.1: Classical baseline models
-│   ├── qifan_crossvariety.ipynb      # Q2.2: Cross-variety evaluation
-│   └── akshyat_finetuning.ipynb      # Q2.3: Fine-tuning & LoRA
+│   ├── qifan_evaluation.ipynb        # Q3: Evaluation metrics & confusion matrices
+│   └── akshyat_lora.ipynb            # Q2.3: LoRA fine-tuning
 │
 ├── deployment/
 │   └── app.py                        # Q5: Gradio/Streamlit deployment app
@@ -56,7 +57,7 @@ ds = load_dataset("surrey-nlp/BESSTIE-CW-26")
 - **Varieties:** British English (en-UK), Australian English (en-AU), Indian English (en-IN)
 - **Domains:** Google Places reviews, Reddit posts/comments
 - **Tasks:** Sentiment (0 = Negative, 1 = Positive), Sarcasm (0 = Not Sarcastic, 1 = Sarcastic)
-- **Split sizes:** ~1,200 train / ~300 val / ~300 test per variety
+- **Split sizes:** en-AU (1145/95/667), en-IN (1399/117/816), en-UK (1203/101/700) — train/val/test
 
 > **Do not commit the dataset to this repo.**
 
@@ -67,10 +68,10 @@ ds = load_dataset("surrey-nlp/BESSTIE-CW-26")
 | Section | Task | Owner |
 |---------|------|-------|
 | Q1 | Data analysis & visualisation | Raaghav |
-| Q2.1 | TF-IDF + LR/SVM vs RoBERTa baseline | Naeem |
-| Q2.2 | Cross-variety evaluation matrix | Qifan |
-| Q2.3 | LoRA fine-tuning on 1B–3B LLM | Akshyat |
-| Q3 | Evaluation (Macro-F1, precision, recall, confusion matrices) | All |
+| Q2.1 | TF-IDF + LR/SVM classical baselines | Naeem |
+| Q2.2 | Cross-variety evaluation matrix (RoBERTa) | Raaghav |
+| Q2.3 | LoRA fine-tuning on 1B–3B LLM per variety | Akshyat |
+| Q3 | Evaluation — Macro-F1, precision, recall, confusion matrices for all experiments | Qifan |
 | Q4 | Sarcasm error analysis & few-shot prompting | All |
 | Q5 | Deployment endpoint + efficiency analysis | All |
 
@@ -90,7 +91,7 @@ Key libraries: `transformers`, `datasets`, `scikit-learn`, `torch`, `peft`, `pan
 
 ## Development Environment
 
-- **Platform:** Google Colab Pro (A100 / T4 GPU)
+- **Platform:** Google Colab (primary), local GPU where needed
 - **Python:** 3.10
 - **Experiment tracking:** Weights & Biases (W&B)
 - **Version control:** This GitHub repository
